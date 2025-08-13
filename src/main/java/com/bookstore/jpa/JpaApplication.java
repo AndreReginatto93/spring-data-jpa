@@ -1,13 +1,13 @@
-package com.bookstore.spa;
+package com.bookstore.jpa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpaApplication {
+public class JpaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpaApplication.class, args);
+		SpringApplication.run(JpaApplication.class, args);
 	}
 
 }

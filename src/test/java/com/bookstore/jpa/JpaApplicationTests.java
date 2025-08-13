@@ -1,10 +1,10 @@
-package com.bookstore.spa;
+package com.bookstore.jpa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpaApplicationTests {
+class JpaApplicationTests {
 
 	@Test
 	void contextLoads() {
