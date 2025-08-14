@@ -9,6 +9,7 @@ import com.bookstore.jpa.repositories.PublisherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +24,9 @@ public class BookService {
         this.publisherRepository = publisherRepository;
     }
 
+    public List<BookModel> getAllBooks(){
+        return bookRepository.findAll();
+    }
 
     @Transactional
     public BookModel saveBook(BookRecordDto bookRecordDto){
