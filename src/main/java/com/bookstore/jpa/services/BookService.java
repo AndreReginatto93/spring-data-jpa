@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,9 @@ public class BookService {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.publisherRepository = publisherRepository;
+    }
+    public Optional<BookModel> getBookById(UUID id){
+        return bookRepository.findById(id);
     }
 
     public List<BookModel> getAllBooks(){
@@ -41,5 +46,42 @@ public class BookService {
         book.setReview(reviewModel);
 
         return bookRepository.save(book);
+    }
+
+    @Transactional
+    public Optional<BookModel> updateBook(UUID id, BookRecordDto bookRecordDto) {
+        return bookRepository.findById(id)
+                .map(existingBook -> {
+                    // Book
+                    existingBook.setTitle(bookRecordDto.title());
+
+                    // Publisher
+                    publisherRepository.findById(bookRecordDto.publisherId())
+                            .ifPresent(existingBook::setPublisher);
+
+                    // Authors
+                    existingBook.setAuthors(
+                            authorRepository.findAllById(bookRecordDto.authorsIds())
+                                    .stream()
+                                    .collect(Collectors.toSet())
+                    );
+
+                    // Review
+                    if (existingBook.getReview() != null) {
+                        existingBook.getReview().setComment(bookRecordDto.reviewComment());
+                    } else {
+                        ReviewModel reviewModel = new ReviewModel();
+                        reviewModel.setComment(bookRecordDto.reviewComment());
+                        reviewModel.setBook(existingBook);
+                        existingBook.setReview(reviewModel);
+                    }
+
+                    return bookRepository.save(existingBook);
+                });
+    }
+
+    @Transactional
+    public void deleteBook(UUID id){
+        bookRepository.deleteById(id);
     }
 }
