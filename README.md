@@ -4,7 +4,7 @@ A simple REST API built with **Java, Spring Boot, and PostgreSQL**, demonstratin
 
 ## Table of Contents
 - [Run Locally](#-run-locally)
-- [Technologies](#technologies)
+- [Technologies](#-technologies)
 - [API Endpoints](#authors)
     - [Authors](#authors)
     - [Publishers](#publisher)
